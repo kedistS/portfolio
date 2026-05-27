@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import "./styles.css";
 
 const devicon = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons";
-const cvUrl = `${import.meta.env.BASE_URL}Kedist_Shegute_CV_Template_Style.pdf`;
+const cvUrl = `${import.meta.env.BASE_URL}Kedist_Shegute_CV.pdf`;
 
 const languageTools = [
   ["Python", `${devicon}/python/python-original.svg`],
