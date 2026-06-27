@@ -36,10 +36,10 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build
+      - name: Build backend portfolio
         env:
           BASE_PATH: ${{ github.event.repository.name == format('{0}.github.io', github.repository_owner) && '/' || format('/{0}/', github.event.repository.name) }}
-        run: pnpm build
+        run: pnpm build:backend
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
