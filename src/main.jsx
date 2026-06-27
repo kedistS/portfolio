@@ -1,9 +1,16 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import "./styles.css";
 
 const devicon = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons";
-const cvUrl = `${import.meta.env.BASE_URL}Kedist_Shegute_CV.pdf`;
+const asset = (path) => `${import.meta.env.BASE_URL}${path}`;
+
+const links = {
+  backendCv: asset("Kedist_Shegute_Backend_Engineer_CV.pdf"),
+  aiCv: asset("Kedist_Shegute_AI_Knowledge_Graph_Engineer_CV.pdf"),
+  backendPage: asset("backend.html"),
+  aiPage: asset("ai.html"),
+};
 
 const languageTools = [
   ["Python", `${devicon}/python/python-original.svg`],
@@ -14,132 +21,321 @@ const languageTools = [
   ["PHP", `${devicon}/php/php-original.svg`],
 ];
 
-const skillGroups = [
-  {
-    title: "AI & Graph",
-    note: "Models, mining, graph databases, and KG tooling.",
-    accent: "gold",
-    tools: [
-      ["TensorFlow", `${devicon}/tensorflow/tensorflow-original.svg`],
-      ["Keras", `${devicon}/keras/keras-original.svg`],
-      ["Neo4j", `${devicon}/neo4j/neo4j-original.svg`],
-      ["NetworkX", null, "NX"],
-      ["SPMiner", null, "SP"],
-      ["BioCypher", null, "BC"],
-    ],
-  },
-  {
-    title: "Web & Apps",
-    note: "APIs, interfaces, mobile apps, and product surfaces.",
-    accent: "cyan",
-    tools: [
-      ["FastAPI", `${devicon}/fastapi/fastapi-original.svg`],
-      ["React", `${devicon}/react/react-original.svg`],
-      ["Flutter", `${devicon}/flutter/flutter-original.svg`],
-      ["Node.js", `${devicon}/nodejs/nodejs-original.svg`],
-      ["Tailwind", `${devicon}/tailwindcss/tailwindcss-original.svg`],
-      ["Bootstrap", `${devicon}/bootstrap/bootstrap-original.svg`],
-    ],
-  },
-  {
-    title: "Data & DevOps",
-    note: "Databases, containers, Linux, and delivery pipelines.",
-    accent: "green",
-    tools: [
-      ["PostgreSQL", `${devicon}/postgresql/postgresql-original.svg`],
-      ["MySQL", `${devicon}/mysql/mysql-original.svg`],
-      ["MongoDB", `${devicon}/mongodb/mongodb-original.svg`],
-      ["Docker", `${devicon}/docker/docker-original.svg`],
-      ["Linux", `${devicon}/linux/linux-original.svg`],
-      ["CI/CD", null, "CI"],
-    ],
-  },
-];
-
-const projects = [
-  {
-    title: "BioCypher Knowledge Graph",
-    period: "Rejuve.Bio · iCog Labs",
-    text: "Large-scale biomedical KG work integrating human and Drosophila sources across genes, proteins, regulatory elements, ontologies, disease biology, and graph refresh workflows.",
-    chips: ["BioCypher", "Ontology adapters", "Neo4j pipelines"],
-    repo: "https://github.com/rejuve-bio/biocypher-kg",
-  },
-  {
-    title: "Neural Subgraph Matcher Miner",
-    period: "Rejuve.Bio · iCog Labs",
-    text: "Mining system work around SPMiner-style workflows, NetworkX graph export, directed graph support, analyzer improvements, visualization, and large biological graph experiments.",
-    chips: ["SPMiner", "NetworkX", "Graph mining"],
-    repo: "https://github.com/rejuve-bio/neural-subgraph-matcher-miner",
-  },
-  {
-    title: "NeuroGraph AI Assistant",
-    period: "iCog Labs",
-    text: "Multi-service AI platform for graph mining, LLM interpretation, annotation tooling, visualization, Docker deployment, and coordinated microservice delivery.",
-    chips: ["AI assistant", "Microservices", "Docker"],
-    repo: "https://github.com/iCog-Labs-Dev/NeuroGraph-AI-Assistant",
-  },
-  {
-    title: "Coffee Disease Detection",
-    period: "Final Year Project · 2023-2024",
-    text: "End-to-end machine learning pipeline for coffee plant disease detection, including data collection, labeling, model training, evaluation, API integration, and frontend delivery.",
-    chips: ["Machine learning", "API", "Frontend"],
-  },
-  {
-    title: "YazLeba Theft Detection App",
-    period: "Personal Project · 2023",
-    text: "Flutter mobile app for campus theft detection and device verification, generating QR-code tags that security staff can scan to confirm device ownership.",
-    chips: ["Flutter", "QR codes", "Theft detection"],
-  },
-  {
-    title: "Lounge Management System",
-    period: "Personal Project · 2022-2023",
-    text: "Java Swing desktop application for campus lounge inventory, customer ordering, and real-time order tracking.",
-    chips: ["Java Swing", "Inventory", "Order tracking"],
-  },
-];
-
-const research = [
-  {
-    number: "20M edges",
-    label: "BioCypher KG · 2026",
-    title: "Human biological KG analysis",
-    text: "Analyzed a large human biological knowledge graph built from genomics, protein, ontology, and annotation sources, using sampled ego-networks to surface recurring graph structures.",
-    metrics: ["150,619 nodes", "20,000 neighborhoods", "10,138 unique entities"],
-  },
-  {
-    number: "503 instances",
-    label: "TFLink · 2026",
-    title: "Human regulatory network report",
-    text: "Studied directed transcription factor relationships to identify recurring hierarchical regulatory structures and convergence points across human gene regulation.",
-    metrics: ["78,686 genes", "6,393,993 edges", "374 motif genes"],
-  },
-  {
-    number: "14,877 instances",
-    label: "STRING PPI · 2026",
-    title: "Protein interaction network report",
-    text: "Mapped structural patterns in human protein interaction networks, highlighting modules connected to immune signaling, chromatin regulation, mitochondria, replication, and transport.",
-    metrics: ["53,356 proteins", "6,612,766 links", "18 motif types"],
-  },
-];
-
 const courseLinks = [
-  {
-    title: "Supervised Machine Learning",
-    url: "https://coursera.org/share/b7106cf994ab5c0c3efb5bfd4743cfec",
-  },
-  {
-    title: "Object-Oriented Design",
-    url: "https://coursera.org/share/06085cf6ef4a2a20a1615620d5287aba",
-  },
-  {
-    title: "Neural Networks and Deep Learning",
-    url: "https://coursera.org/share/f3125b75cd813d2654900e0ed4719a27",
-  },
-  {
-    title: "Mathematics for Machine Learning",
-    url: "https://coursera.org/share/dc2f6d71ca97883f307382732d7ca177",
-  },
+  ["Supervised Machine Learning", "https://coursera.org/share/b7106cf994ab5c0c3efb5bfd4743cfec"],
+  ["Object-Oriented Design", "https://coursera.org/share/06085cf6ef4a2a20a1615620d5287aba"],
+  ["Neural Networks and Deep Learning", "https://coursera.org/share/f3125b75cd813d2654900e0ed4719a27"],
+  ["Mathematics for Machine Learning", "https://coursera.org/share/dc2f6d71ca97883f307382732d7ca177"],
 ];
+
+const portfolios = {
+  backend: {
+    role: "Backend Engineer",
+    eyebrow: "Backend Engineer · Python/FastAPI · UAE work-ready",
+    title: "Building backend systems for AI, data, and knowledge graph products.",
+    intro:
+      "I build Python/FastAPI services, Dockerized workflows, Neo4j/BioCypher data pipelines, and API-connected tools that make complex research data usable in production.",
+    cvUrl: links.backendCv,
+    cvLabel: "Backend CV",
+    switchUrl: links.aiPage,
+    switchLabel: "AI/KG Portfolio",
+    identity:
+      "UAE residency visa holder · twofour54 Software Developer license · Addis Ababa, Ethiopia",
+    marquee: ["Python backend", "FastAPI APIs", "Neo4j pipelines", "Docker deployment", "UAE work-ready"],
+    systemsTitle: "Backend systems behind biomedical AI products.",
+    systemsIntro:
+      "Python services, graph data pipelines, Neo4j loading workflows, Dockerized delivery, and automation for research-driven products.",
+    timeline: ["BioCypher KG", "Python APIs", "NeuroGraph", "Neo4j loaders", "Coffee API", "UAE-ready"],
+    projects: [
+      {
+        title: "BioCypher KG Backend/Data Platform",
+        period: "Rejuve.Bio · iCog Labs",
+        text:
+          "Built backend/data workflows for a BioCypher-driven biomedical KG integrating 34 human and 11 Drosophila sources, with config-driven adapters, multi-format outputs, provenance, and Neo4j loading.",
+        chips: ["Python", "BioCypher", "Neo4j"],
+        repo: "https://github.com/rejuve-bio/biocypher-kg",
+      },
+      {
+        title: "NeuroGraph AI Assistant",
+        period: "iCog Labs",
+        text:
+          "Led a four-service platform with REST orchestration, an AtomSpace/graph builder, neural subgraph miner, React/Remix annotation UI, query backend, and Docker Compose delivery.",
+        chips: ["FastAPI", "Microservices", "Docker"],
+        repo: "https://github.com/iCog-Labs-Dev/NeuroGraph-AI-Assistant",
+      },
+      {
+        title: "Neural Subgraph Matcher Miner API",
+        period: "Rejuve.Bio · iCog Labs",
+        text:
+          "Worked on a graph mining framework with FastAPI endpoints for mining jobs, status tracking, result retrieval, Docker deployment, and interactive HTML visualizations.",
+        chips: ["FastAPI", "NetworkX", "Docker"],
+        repo: "https://github.com/rejuve-bio/neural-subgraph-matcher-miner",
+      },
+      {
+        title: "Coffee Disease Detection API",
+        period: "Final Year Project · 2023-2024",
+        text:
+          "Built an ML-backed application workflow for coffee plant disease detection, including data collection, model training, evaluation, API integration, and frontend delivery.",
+        chips: ["ML API", "Frontend", "Evaluation"],
+      },
+      {
+        title: "Campus PC Authentication",
+        period: "Personal Project · 2023",
+        text:
+          "Flutter mobile app for device registration and QR-code ownership verification, designed for campus security staff to validate device ownership quickly.",
+        chips: ["Flutter", "QR codes", "Auth flow"],
+      },
+      {
+        title: "Lounge Management System",
+        period: "Personal Project · 2022-2023",
+        text:
+          "Java Swing desktop application for campus lounge inventory, customer ordering, and real-time order tracking.",
+        chips: ["Java Swing", "Inventory", "Tracking"],
+      },
+    ],
+    researchTitle: "Research Context",
+    researchIntro:
+      "Research-facing systems and reports that show the scale of the graph data and analysis workflows behind the backend work.",
+    research: [
+      {
+        number: "45 sources",
+        label: "BioCypher KG",
+        title: "Human and Drosophila KG pipelines",
+        text:
+          "Supported biomedical KG builds across genes, proteins, regulatory elements, variants, diseases, ontologies, and annotations.",
+        metrics: ["34 human sources", "11 Drosophila sources", "Multi-format output"],
+      },
+      {
+        number: "20M edges",
+        label: "BioCypher KG · 2026",
+        title: "Large graph analysis support",
+        text:
+          "Prepared and analyzed large KG workflows using BioCypher, Neo4j, NetworkX, and graph mining pipelines.",
+        metrics: ["150,619 nodes", "20,000 neighborhoods", "11,311 instances"],
+      },
+      {
+        number: "4 services",
+        label: "NeuroGraph",
+        title: "Backend orchestration for AI workflows",
+        text:
+          "Connected graph ingestion, analytics, mining, query history, visualization, and downloadable results through service APIs.",
+        metrics: ["REST orchestration", "Docker Compose", "Job tracking"],
+      },
+    ],
+    skillGroups: [
+      {
+        title: "Backend & APIs",
+        note: "Python services, REST workflows, API integration, and production handoff.",
+        tools: [
+          ["FastAPI", `${devicon}/fastapi/fastapi-original.svg`],
+          ["Python", `${devicon}/python/python-original.svg`],
+          ["Node.js", `${devicon}/nodejs/nodejs-original.svg`],
+          ["REST", null, "API"],
+          ["Docker", `${devicon}/docker/docker-original.svg`],
+          ["CI/CD", null, "CI"],
+        ],
+      },
+      {
+        title: "Databases & Graph Data",
+        note: "Graph storage, relational databases, document stores, and large KG loading.",
+        tools: [
+          ["Neo4j", `${devicon}/neo4j/neo4j-original.svg`],
+          ["PostgreSQL", `${devicon}/postgresql/postgresql-original.svg`],
+          ["MySQL", `${devicon}/mysql/mysql-original.svg`],
+          ["MongoDB", `${devicon}/mongodb/mongodb-original.svg`],
+          ["BioCypher", null, "BC"],
+          ["NetworkX", null, "NX"],
+        ],
+      },
+      {
+        title: "Data Pipelines",
+        note: "Config-driven adapters, provenance, validation, and reproducible builds.",
+        tools: [
+          ["UV", null, "UV"],
+          ["Make", null, "MK"],
+          ["MeTTa", null, "MT"],
+          ["Prolog", null, "PL"],
+          ["KGX", null, "KG"],
+          ["Parquet", null, "PQ"],
+        ],
+      },
+      {
+        title: "Web & Delivery",
+        note: "Interfaces and deployment workflows connected to backend systems.",
+        tools: [
+          ["React", `${devicon}/react/react-original.svg`],
+          ["Flutter", `${devicon}/flutter/flutter-original.svg`],
+          ["Linux", `${devicon}/linux/linux-original.svg`],
+          ["Git", `${devicon}/git/git-original.svg`],
+          ["Tailwind", `${devicon}/tailwindcss/tailwindcss-original.svg`],
+          ["Bootstrap", `${devicon}/bootstrap/bootstrap-original.svg`],
+        ],
+      },
+    ],
+    footerEyebrow: "Available for backend and AI backend roles",
+    footerTitle: "Let’s build data systems people can actually use.",
+    footerText:
+      "Python/FastAPI services, biomedical KG pipelines, Neo4j loading workflows, Dockerized delivery, and interfaces for research-driven products.",
+    footerRole: "Backend Engineer",
+  },
+  ai: {
+    role: "AI & Knowledge Graph Engineer",
+    eyebrow: "AI & Knowledge Graph Engineer · Graph Mining · LLM Systems",
+    title: "Building AI systems that turn biological graphs into interpretable insight.",
+    intro:
+      "I build graph-based AI systems across biomedical knowledge graphs, neural subgraph mining, LLM motif interpretation, plant disease classification, and deployable AI product interfaces.",
+    cvUrl: links.aiCv,
+    cvLabel: "AI/KG CV",
+    switchUrl: links.backendPage,
+    switchLabel: "Backend Portfolio",
+    identity:
+      "UAE residency visa holder · twofour54 Software Developer license · Addis Ababa, Ethiopia",
+    marquee: ["Knowledge graphs", "Neural graph mining", "LLM interpretation", "BioAI research", "UAE work-ready"],
+    systemsTitle: "AI systems from graph data to interpretation.",
+    systemsIntro:
+      "Neural mining, biomedical knowledge graphs, LLM-based motif explanation, visual exploration, and AI applications built on production-aware backends.",
+    timeline: ["NeuroGraph", "SPMiner", "BioCypher KG", "TFLink", "STRING PPI", "Coffee AI"],
+    projects: [
+      {
+        title: "NeuroGraph AI Assistant",
+        period: "iCog Labs",
+        text:
+          "Led an end-to-end AI platform for graph ingestion, neural motif mining, LLM-powered interpretation, interactive KG visualization, annotation workflows, and downloadable results.",
+        chips: ["LLM interpretation", "Graph mining", "AI platform"],
+        repo: "https://github.com/iCog-Labs-Dev/NeuroGraph-AI-Assistant",
+      },
+      {
+        title: "Neural Subgraph Matcher Miner",
+        period: "Rejuve.Bio · iCog Labs",
+        text:
+          "Worked with GNN-based neural subgraph matching and frequent subgraph mining inspired by NeuroMatch and SPMiner, including semantic label embeddings and interactive motif visualizations.",
+        chips: ["GNNs", "SPMiner", "MiniLM"],
+        repo: "https://github.com/rejuve-bio/neural-subgraph-matcher-miner",
+      },
+      {
+        title: "BioCypher KG & Biomedical Analysis",
+        period: "Rejuve.Bio · iCog Labs",
+        text:
+          "Built and analyzed biomedical KG infrastructure integrating human and Drosophila sources, then used graph mining workflows to surface recurring biological motifs.",
+        chips: ["BioCypher", "Neo4j", "BioAI"],
+        repo: "https://github.com/rejuve-bio/biocypher-kg",
+      },
+      {
+        title: "Coffee Plant Disease Classification",
+        period: "Final Year Project · 2023-2024",
+        text:
+          "Built an end-to-end plant disease classification workflow for coffee leaves, including dataset collection, labeling, model training, evaluation, API integration, and frontend delivery.",
+        chips: ["Computer vision", "ML pipeline", "API"],
+      },
+      {
+        title: "Campus PC Authentication",
+        period: "Personal Project · 2023",
+        text:
+          "Flutter QR verification app for device ownership workflows, included here as practical product-building experience beyond research systems.",
+        chips: ["Flutter", "QR codes", "Mobile"],
+      },
+      {
+        title: "Lounge Management System",
+        period: "Personal Project · 2022-2023",
+        text:
+          "Java Swing desktop application for inventory, ordering, and real-time order tracking.",
+        chips: ["Java Swing", "Desktop", "Tracking"],
+      },
+    ],
+    researchTitle: "Research and Analysis",
+    researchIntro:
+      "Biomedical graph-mining reports across human biological KGs, transcription factor regulation, and protein interaction networks.",
+    research: [
+      {
+        number: "20M edges",
+        label: "BioCypher KG · 2026",
+        title: "Human biological KG analysis",
+        text:
+          "Analyzed a large human biological knowledge graph built from GO, STRING, TFLink, GENCODE, UniProt, and GAF data.",
+        metrics: ["150,619 nodes", "20,000 neighborhoods", "11,311 instances"],
+      },
+      {
+        number: "503 instances",
+        label: "TFLink · 2026",
+        title: "Human regulatory network report",
+        text:
+          "Studied directed transcription factor relationships to identify recurring hierarchical structures and convergence points across human gene regulation.",
+        metrics: ["78,686 genes", "6,393,993 edges", "374 motif genes"],
+      },
+      {
+        number: "14,877 instances",
+        label: "STRING PPI · 2026",
+        title: "Protein interaction network report",
+        text:
+          "Mapped structural patterns in human protein interaction networks, highlighting immune, chromatin, mitochondrial, replication, and transport modules.",
+        metrics: ["53,356 proteins", "6,612,766 links", "18 motif types"],
+      },
+    ],
+    skillGroups: [
+      {
+        title: "AI & Graph Mining",
+        note: "GNN-style mining, semantic labels, graph search, and motif discovery.",
+        tools: [
+          ["TensorFlow", `${devicon}/tensorflow/tensorflow-original.svg`],
+          ["Keras", `${devicon}/keras/keras-original.svg`],
+          ["SPMiner", null, "SP"],
+          ["NeuroMatch", null, "NM"],
+          ["MiniLM", null, "ML"],
+          ["R-GCN", null, "RG"],
+        ],
+      },
+      {
+        title: "Knowledge Graphs",
+        note: "Biomedical graph modeling, graph databases, and multi-format KG output.",
+        tools: [
+          ["Neo4j", `${devicon}/neo4j/neo4j-original.svg`],
+          ["BioCypher", null, "BC"],
+          ["NetworkX", null, "NX"],
+          ["MeTTa", null, "MT"],
+          ["Prolog", null, "PL"],
+          ["KGX", null, "KG"],
+        ],
+      },
+      {
+        title: "AI Backend",
+        note: "APIs and deployment surfaces that make AI systems usable.",
+        tools: [
+          ["FastAPI", `${devicon}/fastapi/fastapi-original.svg`],
+          ["Python", `${devicon}/python/python-original.svg`],
+          ["Docker", `${devicon}/docker/docker-original.svg`],
+          ["REST", null, "API"],
+          ["CI/CD", null, "CI"],
+          ["Linux", `${devicon}/linux/linux-original.svg`],
+        ],
+      },
+      {
+        title: "Applications",
+        note: "Interfaces, ML applications, mobile apps, and product delivery.",
+        tools: [
+          ["React", `${devicon}/react/react-original.svg`],
+          ["Flutter", `${devicon}/flutter/flutter-original.svg`],
+          ["Node.js", `${devicon}/nodejs/nodejs-original.svg`],
+          ["Java", `${devicon}/java/java-original.svg`],
+          ["Vision", null, "CV"],
+          ["LLMs", null, "AI"],
+        ],
+      },
+    ],
+    footerEyebrow: "Available for AI, AI backend, and knowledge graph roles",
+    footerTitle: "Let’s make complex biological graphs easier to understand.",
+    footerText:
+      "Biomedical KG pipelines, neural graph mining, LLM motif interpretation, plant disease classification, and deployable AI product interfaces.",
+    footerRole: "AI & Knowledge Graph Engineer",
+  },
+};
+
+function currentPortfolio() {
+  const explicit = window.__PORTFOLIO_FOCUS__;
+  if (explicit && portfolios[explicit]) return portfolios[explicit];
+  const deploymentFocus = import.meta.env.VITE_PORTFOLIO_FOCUS;
+  if (deploymentFocus && portfolios[deploymentFocus]) return portfolios[deploymentFocus];
+  return window.location.pathname.toLowerCase().includes("ai") ? portfolios.ai : portfolios.backend;
+}
 
 function useVisibleSections() {
   const [active, setActive] = useState("systems");
@@ -189,17 +385,15 @@ function useVisibleSections() {
 }
 
 function Header({ active }) {
-  const links = ["systems", "research", "lab", "contact"];
+  const navLinks = ["systems", "research", "lab", "contact"];
 
   const handleNav = (event, link) => {
     event.preventDefault();
     window.history.pushState(null, "", `#${link}`);
-
     if (link === "contact") {
       window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
       return;
     }
-
     document.querySelector(`#${link}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
@@ -210,7 +404,7 @@ function Header({ active }) {
         <strong>Kedist</strong>
       </a>
       <nav className="nav" aria-label="Primary navigation">
-        {links.map((link) => (
+        {navLinks.map((link) => (
           <a
             key={link}
             href={`#${link}`}
@@ -225,7 +419,7 @@ function Header({ active }) {
   );
 }
 
-function Hero() {
+function Hero({ content }) {
   return (
     <section className="hero section-panel is-visible" id="top" data-section="top" aria-labelledby="hero-title">
       <div className="graph-stage" aria-hidden="true">
@@ -239,41 +433,39 @@ function Hero() {
       </div>
 
       <div className="hero-copy">
-        <p className="eyebrow">AI Developer · KG Engineer · Full-stack Builder</p>
-        <h1 id="hero-title">Building data systems that move from research to product.</h1>
-        <p className="intro">
-          I build biomedical knowledge graph pipelines, neural mining tools, and AI product interfaces,
-          turning complex research data into systems teams can query, test, and deploy.
-        </p>
+        <p className="eyebrow">{content.eyebrow}</p>
+        <h1 id="hero-title">{content.title}</h1>
+        <p className="intro">{content.intro}</p>
         <div className="hero-actions">
           <a className="button primary" href="#systems">Explore work</a>
-          <a className="button ghost external-link" href={cvUrl} target="_blank" rel="noreferrer">Open CV</a>
+          <a className="button ghost external-link" href={content.cvUrl} target="_blank" rel="noreferrer">{content.cvLabel}</a>
+          <a className="button ghost external-link" href={content.switchUrl}>{content.switchLabel}</a>
         </div>
       </div>
 
       <aside className="identity-card" aria-label="Kedist profile">
         <div className="profile-mark" aria-hidden="true">K</div>
         <div className="identity-copy">
-          <p className="role">AI Developer & Knowledge Graph Engineer</p>
+          <p className="role">{content.role}</p>
           <h2>Kedist Shegute Dimore</h2>
-          <p>Addis Ababa, Ethiopia · Licensed software developer in the UAE</p>
+          <p>{content.identity}</p>
         </div>
       </aside>
     </section>
   );
 }
 
-function Systems() {
+function Systems({ content }) {
   return (
     <section className="section system-section section-panel" id="systems" data-section="systems">
       <div className="section-kicker"><span>01</span></div>
       <div className="section-head">
-        <h2>Selected Projects</h2>
-        <p>Biomedical knowledge graphs, neural graph mining, AI assistant infrastructure, and practical apps built across web, mobile, and desktop.</p>
+        <h2>{content.systemsTitle}</h2>
+        <p>{content.systemsIntro}</p>
       </div>
 
       <div className="work-grid">
-        {projects.map((item) => (
+        {content.projects.map((item) => (
           <article className="work-card" key={item.title}>
             <div className="work-card-top">
               <p className="case-label">{item.period}</p>
@@ -291,7 +483,7 @@ function Systems() {
       </div>
 
       <div className="timeline-strip" aria-label="Career timeline">
-        {["BioCypher KG", "Miner", "NeuroGraph", "Coffee ML", "YazLeba", "Lounge app"].map((item) => (
+        {content.timeline.map((item) => (
           <div key={item}>
             <span />
             <p>{item}</p>
@@ -302,16 +494,16 @@ function Systems() {
   );
 }
 
-function Research() {
+function Research({ content }) {
   return (
     <section className="section research-section section-panel" id="research" data-section="research">
       <div className="section-kicker"><span>02</span></div>
       <div className="section-head">
-        <h2>Research and Analysis</h2>
-        <p>Technical reports from biomedical knowledge graph mining, regulatory network analysis, and protein interaction motif discovery.</p>
+        <h2>{content.researchTitle}</h2>
+        <p>{content.researchIntro}</p>
       </div>
       <div className="research-board">
-        {research.map((item) => (
+        {content.research.map((item) => (
           <article key={item.title}>
             <div className="research-number">{item.number}</div>
             <p className="case-label">{item.label}</p>
@@ -327,10 +519,8 @@ function Research() {
       <div className="course-strip">
         <p className="case-label">Coursera coursework</p>
         <div>
-          {courseLinks.map((course) => (
-            <a key={course.title} href={course.url} target="_blank" rel="noreferrer">
-              {course.title}
-            </a>
+          {courseLinks.map(([title, url]) => (
+            <a key={title} href={url} target="_blank" rel="noreferrer">{title}</a>
           ))}
         </div>
       </div>
@@ -348,26 +538,26 @@ function LogoTile({ tool }) {
   );
 }
 
-function Lab() {
+function Lab({ content }) {
   return (
     <section className="section lab-section section-panel" id="lab" data-section="lab">
       <div className="section-kicker"><span>03</span></div>
       <div className="lab-intro">
-        <h2>A practical builder’s toolkit.</h2>
-        <p>Models, graphs, APIs, interfaces, data, and deployment.</p>
+        <h2>{content.role} toolkit.</h2>
+        <p>{content.skillGroups.map((group) => group.title).join(", ")}.</p>
       </div>
 
       <div className="toolkit-board">
         <article className="skill-card language-card">
           <div className="skill-card-head"><h3>Languages</h3></div>
-          <p className="skill-tagline">Core languages for AI systems, web products, automation, and mobile apps.</p>
+          <p className="skill-tagline">Core languages for AI systems, backend services, automation, and product delivery.</p>
           <div className="language-grid">
             {languageTools.map((tool) => <LogoTile key={tool[0]} tool={tool} />)}
           </div>
         </article>
 
-        {skillGroups.map((group) => (
-          <article className={`skill-card feature-skill ${group.accent}`} key={group.title}>
+        {content.skillGroups.map((group) => (
+          <article className="skill-card feature-skill" key={group.title}>
             <div className="skill-card-head"><h3>{group.title}</h3></div>
             <p className="skill-tagline">{group.note}</p>
             <div className="logo-cloud">
@@ -380,15 +570,15 @@ function Lab() {
   );
 }
 
-function Contact() {
+function Contact({ content }) {
   return (
     <footer className="contact-section section-panel" id="contact" data-section="contact">
       <div className="footer-wave" aria-hidden="true" />
       <div className="footer-inner">
         <div className="footer-brand">
-          <p className="eyebrow">Available for AI, graph, and full-stack systems work</p>
-          <h2>Let’s make complex knowledge easier to use.</h2>
-          <p>Biomedical KG pipelines, neural mining tools, backend services, and interfaces for research-driven products.</p>
+          <p className="eyebrow">{content.footerEyebrow}</p>
+          <h2>{content.footerTitle}</h2>
+          <p>{content.footerText}</p>
         </div>
 
         <nav className="footer-column" aria-label="Project links">
@@ -403,7 +593,8 @@ function Contact() {
           <a href="#systems">Selected Projects</a>
           <a href="#research">Research</a>
           <a href="#lab">Toolkit</a>
-          <a className="external-link" href={cvUrl} target="_blank" rel="noreferrer">Open CV</a>
+          <a className="external-link" href={content.cvUrl} target="_blank" rel="noreferrer">{content.cvLabel}</a>
+          <a className="external-link" href={content.switchUrl}>{content.switchLabel}</a>
         </nav>
 
         <div className="footer-column footer-contact">
@@ -424,8 +615,8 @@ function Contact() {
 
       <div className="footer-bottom">
         <span>Kedist Shegute Dimore</span>
-        <span>Addis Ababa, Ethiopia</span>
-        <span>AI Developer & Knowledge Graph Engineer</span>
+        <span>UAE residency visa holder</span>
+        <span>{content.footerRole}</span>
       </div>
     </footer>
   );
@@ -433,8 +624,10 @@ function Contact() {
 
 function App() {
   const active = useVisibleSections();
+  const content = currentPortfolio();
 
   useEffect(() => {
+    document.title = `Kedist Shegute Dimore | ${content.role}`;
     if (!window.location.hash) return;
     const frame = requestAnimationFrame(() => {
       if (window.location.hash === "#contact") {
@@ -444,22 +637,20 @@ function App() {
       document.querySelector(window.location.hash)?.scrollIntoView({ block: "start" });
     });
     return () => cancelAnimationFrame(frame);
-  }, []);
+  }, [content]);
 
   return (
     <>
       <Header active={active} />
       <main>
-        <Hero />
+        <Hero content={content} />
         <section className="marquee" aria-label="Core strengths">
-          {["Knowledge graph engineering", "Ontology adapters", "Neo4j pipelines", "Full-stack AI", "CI/CD automation"].map((item) => (
-            <p key={item}>{item}</p>
-          ))}
+          {content.marquee.map((item) => <p key={item}>{item}</p>)}
         </section>
-        <Systems />
-        <Research />
-        <Lab />
-        <Contact />
+        <Systems content={content} />
+        <Research content={content} />
+        <Lab content={content} />
+        <Contact content={content} />
       </main>
     </>
   );

@@ -2,6 +2,8 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
+    "build:backend": "VITE_PORTFOLIO_FOCUS=backend vite build",
+    "build:ai": "VITE_PORTFOLIO_FOCUS=ai vite build",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
