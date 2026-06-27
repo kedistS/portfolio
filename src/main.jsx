@@ -8,8 +8,6 @@ const asset = (path) => `${import.meta.env.BASE_URL}${path}`;
 const links = {
   backendCv: asset("Kedist_Shegute_Backend_Engineer_CV.pdf"),
   aiCv: asset("Kedist_Shegute_AI_Knowledge_Graph_Engineer_CV.pdf"),
-  backendPage: asset("backend.html"),
-  aiPage: asset("ai.html"),
 };
 
 const languageTools = [
@@ -37,8 +35,6 @@ const portfolios = {
       "I build Python/FastAPI services, Dockerized workflows, Neo4j/BioCypher data pipelines, and API-connected tools that make complex research data usable in production.",
     cvUrl: links.backendCv,
     cvLabel: "Backend CV",
-    switchUrl: links.aiPage,
-    switchLabel: "AI/KG Portfolio",
     identity:
       "UAE residency visa holder · twofour54 Software Developer license · Addis Ababa, Ethiopia",
     marquee: ["Python backend", "FastAPI APIs", "Neo4j pipelines", "Docker deployment", "UAE work-ready"],
@@ -186,8 +182,6 @@ const portfolios = {
       "I build graph-based AI systems across biomedical knowledge graphs, neural subgraph mining, LLM motif interpretation, plant disease classification, and deployable AI product interfaces.",
     cvUrl: links.aiCv,
     cvLabel: "AI/KG CV",
-    switchUrl: links.backendPage,
-    switchLabel: "Backend Portfolio",
     identity:
       "UAE residency visa holder · twofour54 Software Developer license · Addis Ababa, Ethiopia",
     marquee: ["Knowledge graphs", "Neural graph mining", "LLM interpretation", "BioAI research", "UAE work-ready"],
@@ -439,7 +433,6 @@ function Hero({ content }) {
         <div className="hero-actions">
           <a className="button primary" href="#systems">Explore work</a>
           <a className="button ghost external-link" href={content.cvUrl} target="_blank" rel="noreferrer">{content.cvLabel}</a>
-          <a className="button ghost external-link" href={content.switchUrl}>{content.switchLabel}</a>
         </div>
       </div>
 
@@ -594,7 +587,6 @@ function Contact({ content }) {
           <a href="#research">Research</a>
           <a href="#lab">Toolkit</a>
           <a className="external-link" href={content.cvUrl} target="_blank" rel="noreferrer">{content.cvLabel}</a>
-          <a className="external-link" href={content.switchUrl}>{content.switchLabel}</a>
         </nav>
 
         <div className="footer-column footer-contact">

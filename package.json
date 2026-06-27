@@ -2,8 +2,8 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "build": "vite build",
-    "build:backend": "VITE_PORTFOLIO_FOCUS=backend vite build",
-    "build:ai": "VITE_PORTFOLIO_FOCUS=ai vite build",
+    "build:backend": "VITE_PORTFOLIO_FOCUS=backend vite build && rm -f dist/Kedist_Shegute_AI_Knowledge_Graph_Engineer_CV.pdf",
+    "build:ai": "VITE_PORTFOLIO_FOCUS=ai vite build && rm -f dist/Kedist_Shegute_Backend_Engineer_CV.pdf",
     "preview": "vite preview --host 0.0.0.0"
   },
   "dependencies": {
