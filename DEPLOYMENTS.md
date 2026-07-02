@@ -10,5 +10,5 @@ Use these deployment settings:
 
 This renders the backend-focused portfolio at the deployment root.
 
-The AI/KG portfolio should live in a separate repo/deployment so recruiters only
-see the version that matches the role they were sent.
+The AI/graph systems portfolio should live in a separate repo/deployment so
+recruiters only see the version that matches the role they were sent.

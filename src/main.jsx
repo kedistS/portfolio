@@ -28,25 +28,25 @@ const courseLinks = [
 const portfolio = {
   role: "Backend Engineer",
   eyebrow: "Backend Engineer · Python/FastAPI · UAE work-ready",
-  title: "Building backend systems for AI, data, and knowledge graph products.",
+  title: "Building backend systems for graph, data, and AI products.",
   intro:
-    "I build Python/FastAPI services, Dockerized workflows, Neo4j/BioCypher data pipelines, and API-connected tools that make complex research data usable in production.",
+    "I build Python/FastAPI services, Dockerized workflows, Neo4j knowledge graph pipelines, and API-connected tools that make complex graph data usable in production.",
   cvUrl: links.backendCv,
   cvLabel: "Backend CV",
   identity:
     "UAE residency visa holder · twofour54 Software Developer license · Addis Ababa, Ethiopia",
   marquee: ["Python backend", "FastAPI APIs", "Neo4j pipelines", "Docker deployment", "UAE work-ready"],
-  systemsTitle: "Backend systems behind biomedical AI products.",
+  systemsTitle: "Backend systems behind graph and AI products.",
   systemsIntro:
-    "Python services, graph data pipelines, Neo4j loading workflows, Dockerized delivery, and automation for research-driven products.",
+    "Python services, graph data pipelines, Neo4j loading workflows, Dockerized delivery, and automation for data-intensive products.",
   timeline: ["BioCypher KG", "Python APIs", "NeuroGraph", "Neo4j loaders", "Coffee API", "UAE-ready"],
   projects: [
     {
-      title: "BioCypher KG Backend/Data Platform",
+      title: "Knowledge Graph Backend/Data Platform",
       period: "Rejuve.Bio · iCog Labs",
       text:
-        "Built backend/data workflows for a BioCypher-driven biomedical KG integrating 34 human and 11 Drosophila sources, with config-driven adapters, multi-format outputs, provenance, and Neo4j loading.",
-      chips: ["Python", "BioCypher", "Neo4j"],
+        "Built backend/data workflows for a BioCypher-driven knowledge graph, with config-driven adapters, multi-format outputs, provenance tracking, and Neo4j loading for large connected datasets.",
+      chips: ["Python", "Knowledge graphs", "Neo4j"],
       repo: "https://github.com/rejuve-bio/biocypher-kg",
     },
     {
@@ -93,24 +93,24 @@ const portfolio = {
   research: [
     {
       number: "45 sources",
-      label: "BioCypher KG",
-      title: "Human and Drosophila KG pipelines",
+      label: "Knowledge graph pipeline",
+      title: "Multi-source graph data integration",
       text:
-        "Supported biomedical KG builds across genes, proteins, regulatory elements, variants, diseases, ontologies, and annotations.",
-      metrics: ["34 human sources", "11 Drosophila sources", "Multi-format output"],
+        "Supported large KG builds across heterogeneous source files, schemas, relationships, ontologies, and annotations.",
+      metrics: ["45 data sources", "Schema-driven adapters", "Multi-format output"],
     },
     {
       number: "20M edges",
-      label: "BioCypher KG · 2026",
+      label: "Graph analysis · 2026",
       title: "Large graph analysis support",
       text:
-        "Prepared and analyzed large KG workflows using BioCypher, Neo4j, NetworkX, and graph mining pipelines.",
+        "Prepared and analyzed large KG workflows using BioCypher, Neo4j, NetworkX, and graph mining pipelines, with research data as one application domain.",
       metrics: ["150,619 nodes", "20,000 neighborhoods", "11,311 instances"],
     },
     {
       number: "4 services",
       label: "NeuroGraph",
-      title: "Backend orchestration for AI workflows",
+      title: "Backend orchestration for graph AI workflows",
       text:
         "Connected graph ingestion, analytics, mining, query history, visualization, and downloadable results through service APIs.",
       metrics: ["REST orchestration", "Docker Compose", "Job tracking"],
@@ -169,7 +169,7 @@ const portfolio = {
   footerEyebrow: "Available for backend and AI backend roles",
   footerTitle: "Let’s build data systems people can actually use.",
   footerText:
-    "Python/FastAPI services, biomedical KG pipelines, Neo4j loading workflows, Dockerized delivery, and interfaces for research-driven products.",
+    "Python/FastAPI services, knowledge graph pipelines, Neo4j loading workflows, Dockerized delivery, and interfaces for data-intensive products.",
   footerRole: "Backend Engineer",
 };
 
